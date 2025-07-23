@@ -2,5 +2,9 @@ services:
   - type: web
     name: seo-tool
     env: python
-    buildCommand: "pip install -r requirements.txt"
-    startCommand: "python app.py"
+    plan: free  # optional: can be free, starter, etc.
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:app
+    envVars:
+      - key: PORT
+        value: 10000
