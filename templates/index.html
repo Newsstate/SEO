@@ -1,0 +1,32 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>SEO & Traffic Analyzer</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-gray-100 p-6">
+  <div class="max-w-4xl mx-auto bg-white shadow p-6 rounded">
+    <h2 class="text-2xl font-bold mb-4">SEO & Traffic Analyzer Tool</h2>
+    <form id="form">
+      <input type="text" id="url" placeholder="Enter website URL" required class="w-full p-2 border mb-2"/>
+      <button class="bg-blue-600 text-white px-4 py-2 rounded">Analyze</button>
+    </form>
+    <pre id="result" class="mt-4 text-sm bg-gray-100 p-4 rounded overflow-x-auto whitespace-pre-wrap"></pre>
+  </div>
+
+  <script>
+    document.getElementById('form').addEventListener('submit', async function(e) {
+      e.preventDefault();
+      const url = document.getElementById('url').value;
+      const formData = new FormData();
+      formData.append('url', url);
+      document.getElementById('result').innerText = 'Analyzing...';
+      const res = await fetch('/analyze', { method: 'POST', body: formData });
+      const data = await res.json();
+      document.getElementById('result').innerText = JSON.stringify(data, null, 2);
+    });
+  </script>
+</body>
+</html>
